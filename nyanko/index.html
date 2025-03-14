@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+</head>
+<style>
+    .element {    color: black;
+                    background-size: cover;
+                    background-bosition: center top 10px;
+                    background-repeat: no-repeat;
+                    background-image: url("https://cdn.discordapp.com/attachments/1346772179081101322/1347817284252598332/IMG_7085.webp?ex=67cd3429&is=67cbe2a9&hm=a0b76a9b94ac6d398263dfc14739284b37c685303e5b25ef127f928fed930f04&");
+    }
+</style>
+<body class="element"><div id="mainmenu">
+    <span style="font-size:    28px">にゃんこ大戦争</span>
+    <br>
+    <span>猫缶、XP等</span>
+    <span>     施設</span>
+    <br>
+    <span>猫缶</span>
+    <button onclick="giveprompt(' 猫缶 ',offsets.nekokan)">変更</button>
+    <span>    統率力</span>
+    <button onclick="giveprompt(' 統率力 ',offsets.tousoturyoku)">変更</button>
+    <br>
+    <span>XP</span>
+    <button onclick="giveprompt(' XP ',offsets.xp)">変更</button>
+    <span>       勉強力</span>
+    <button onclick="giveprompt(' 勉強力 ',offsets.benkyouryoku)">変更</button>
+    <br>
+    <span>NP</span>
+    <button onclick="giveprompt(' NP ',offsets.np)">変更</button>
+    <span>     会計力</span>
+    <button onclick="giveprompt(' 会計力 ',offsets.kaikeiryoku)">変更</button>
+    <br>
+    <span>敵城体力0</span>
+    <label><input type="checkbox" id="saveCheckbox" onclick= " ruhp(' 敵城 ',offsets.tekishiro)"></label>
+    <br>
+    <span>自城体力</span>
+    <button onclick="giveprompt(' 自城 ',offsets.jijyou)">変更</button>
+    <br>
+    <span>にゃんチケ</span>
+    <button onclick="giveprompt(' にゃんチケ ',offsets.nyantike)">変更</button>
+    <br>
+<span>レアチケ</span>
+    <button onclick="giveprompt(' レアチケ ',offsets.reatike)">変更</button>
+    <br>
+    <span>伝説のラブレター</span>
+    <button onclick="giveprompt(' 伝説のラブレター ',offsets.rabureta)">変更</button>
+    </div>
+</body>
+<script>
+let intervalId;
+
+    let baseAddr = Number(h5gg.getRangesList(0)[0].start);
+    offsets = {
+            nekokan: baseAddr + 0x1C5FB58,
+             xp: baseAddr + 0x1C5FCC8,
+             np: baseAddr + 0x1C5FCD0,
+             tekishiro: baseAddr + 0x1CDCBB8,
+            jijyou: baseAddr + 0x1CD1140,
+             nyantike: baseAddr + 0x1F3F144,
+             reatike: baseAddr + 0x1F3F14C,
+             rabureta: baseAddr + 0x1F3F1E0,
+             tousoturyoku: baseAddr + 0x1C9D7FC,
+             benkyouryoku: baseAddr + 0x1C9D7F4,
+             kaikeiryoku: baseAddr + 0x1C9D7EC,
+             }
+    setWindowDrag(0,0,350,60);
+
+    function giveprompt(name, offset) {
+              const value = prompt( `${name}の数値を入力してください` );
+                if (value !== null) {    const parsedValue = parseInt(value,10);
+                if (!isNaN(parsedValue))    {
+      h5gg.setValue(offset,parsedValue, "I32");
+      h5gg.setValue(offset + 4,0,"I32");
+      alert("変更しました");
+    } else {        alert("正しい数値を入力してください");
+    }
+  }
+}
+
+
+    function ruhp(name, offset) {
+
+        let checkbox = document.getElementById("saveCheckbox");
+
+        if (checkbox.checked) {
+                // チェックがついた時に setInterval を開始
+                intervalId = setInterval(() => {
+        h5gg.setValue(offset, '0', "I32"); 
+        h5gg.setValue(offset, '0', "I32"); 
+}, 1000);
+} else{
+clearInterval(intervalId);
+    }
+}
+</script>
+</html>
